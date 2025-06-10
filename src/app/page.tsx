@@ -143,7 +143,17 @@ export default function Home() {
         </div>
         <div className="bg-dungeon-surface/90 backdrop-blur-sm p-8 rounded-lg border-2 border-dungeon-border shadow-2xl max-w-md w-full mx-4">
           <div className="text-center mb-6">
-            <div className="text-5xl mb-4">🏰</div>
+            <div className="mb-6 flex justify-center">
+              <Image
+                src="/images/logo.png"
+                alt="The Dungeon"
+                width={96}
+                height={96}
+                className="mx-auto"
+                priority
+                draggable={false}
+              />
+            </div>
             <h1 className="text-3xl font-dungeon font-bold text-dungeon-gold mb-2 glow-text">
               THE DUNGEON
             </h1>

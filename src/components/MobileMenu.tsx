@@ -6,6 +6,8 @@ import PlayerStats from './PlayerStats';
 import Leaderboard from './Leaderboard';
 import MonsterDamageBoard from './MonsterDamageBoard';
 import TreasureBox from './TreasureBox';
+import Image from "next/image";
+
 
 interface PlayerData {
   walletAddress: string;
@@ -84,9 +86,8 @@ const MobileMenu: FC<MobileMenuProps> = ({
 
       {/* Side Menu */}
       <div
-        className={`md:hidden fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-dungeon-surface/95 backdrop-blur-md border-r border-dungeon-border shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`md:hidden fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-dungeon-surface/95 backdrop-blur-md border-r border-dungeon-border shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
       >
         {/* Menu Header */}
         <div className="flex items-center justify-between p-4 border-b border-dungeon-border">
@@ -109,11 +110,10 @@ const MobileMenu: FC<MobileMenuProps> = ({
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center space-x-2 py-3 px-2 text-sm font-medium transition-colors ${
-                  activeTab === tab.id
+                className={`flex-1 flex items-center justify-center space-x-2 py-3 px-2 text-sm font-medium transition-colors ${activeTab === tab.id
                     ? 'text-dungeon-gold border-b-2 border-dungeon-gold bg-dungeon-accent/30'
                     : 'text-gray-400 hover:text-white hover:bg-dungeon-accent/20'
-                }`}
+                  }`}
               >
                 <Icon className="w-4 h-4" />
                 <span className="hidden sm:inline">{tab.label}</span>
@@ -154,8 +154,19 @@ const MobileMenu: FC<MobileMenuProps> = ({
 
         {/* Menu Footer */}
         <div className="border-t border-dungeon-border p-4">
-          <div className="text-center text-xs text-gray-400">
-            🏰 THE DUNGEON
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/logo.png"
+              alt="The Dungeon"
+              width={36}
+              height={36}
+              className="mb-1"
+              draggable={false}
+              priority
+            />
+            <span className="text-xs text-gray-400 font-semibold tracking-wide">
+              THE DUNGEON
+            </span>
           </div>
         </div>
       </div>
