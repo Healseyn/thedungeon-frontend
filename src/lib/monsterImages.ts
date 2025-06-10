@@ -3,6 +3,7 @@ export const MONSTER_IMAGES: Record<string, string> = {
   'Ice Wyrm': '/images/monsters/iceWyrm.png',
   'Stone Golem': '/images/monsters/golem.png',
   'Forest Ent': '/images/monsters/forestEnt.png',
+  'Shadow Dragon': '/images/monsters/shadowDragon.png',
 };
 
 export function getMonsterImage(name: string): string {
