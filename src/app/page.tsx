@@ -13,6 +13,7 @@ import TreasureBox from '@/components/TreasureBox';
 import MobileMenu from '@/components/MobileMenu';
 import Footer from '@/components/Footer';
 import { devLog } from '@/lib/devLog';
+import Image from 'next/image';
 
 export default function Home() {
   const {
@@ -69,7 +70,17 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-dungeon-bg dungeon-atmosphere flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-6 animate-bounce">🏰</div>
+          <div className="mb-6 animate-bounce flex justify-center">
+            <Image
+              src="/images/logo.png"
+              alt="The Dungeon"
+              width={96}
+              height={96}
+              className="mx-auto"
+              priority
+              draggable={false}
+            />
+          </div>
           <h1 className="text-4xl font-dungeon font-bold text-dungeon-gold mb-4 glow-text">
             THE DUNGEON
           </h1>
