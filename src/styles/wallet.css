@@ -1,0 +1,82 @@
+.wallet-btn,
+.wallet-adapter-button {
+  background: transparent !important;
+  border: 1px solid #3a3a3e !important;
+  color: #e4e4e7 !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  padding: 0.55rem 1.4rem !important;
+  line-height: 1.2 !important;
+  transition: background 0.15s, border 0.15s, color 0.15s;
+}
+
+.wallet-btn:hover,
+.wallet-adapter-button:hover,
+.wallet-btn:focus,
+.wallet-adapter-button:focus {
+  background: #2b2b30 !important;
+  border-color: #ffd600 !important;
+  color: #ffd600 !important;
+  outline: none !important;
+}
+
+.wallet-adapter-modal-overlay {
+  background: rgba(0, 0, 0, 0.72) !important;
+  backdrop-filter: blur(2px);
+}
+
+.wallet-adapter-modal-wrapper {
+  background: #141416 !important;
+  border: 1px solid #2b2b30 !important;
+  border-radius: 14px !important;
+  padding: 24px 20px 18px !important;
+  box-shadow: 0 6px 24px #0007 !important;
+}
+
+.wallet-adapter-modal-title {
+  color: #e4e4e7 !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 18px !important;
+  text-align: center;
+}
+
+.wallet-adapter-modal-list {
+  gap: 10px !important;
+}
+
+.wallet-adapter-modal-list-item {
+  background: #1a1a1d !important;
+  border: 1px solid #2b2b30 !important;
+  color: #e4e4e7 !important;
+  border-radius: 10px !important;
+  padding: 0.55rem 1rem !important;
+  font-weight: 600 !important;
+  transition: background 0.15s, border 0.15s, color 0.15s;
+}
+.wallet-adapter-modal-list-item:hover {
+  background: #2b2b30 !important;
+  border-color: #ffd600 !important;
+  color: #ffd600 !important;
+}
+
+.wallet-adapter-modal-list-item-description {
+  color: #8b8b91 !important;
+  font-size: 0.85rem !important;
+}
+
+.wallet-adapter-modal-list-item-icon {
+  width: 28px !important;
+  height: 28px !important;
+  margin-right: 10px !important;
+}
+
+.wallet-adapter-modal-button-close {
+  top: 14px !important;
+  right: 14px !important;
+  color: #5a5a63 !important;
+  transition: color 0.15s;
+}
+.wallet-adapter-modal-button-close:hover {
+  color: #ffd600 !important;
+}
