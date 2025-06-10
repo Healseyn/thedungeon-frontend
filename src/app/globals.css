@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0a;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar        { width: 8px;      }
+::-webkit-scrollbar-track  { background:#1a1a1a; }
+::-webkit-scrollbar-thumb  { background:#8b5a3c; border-radius:4px; }
+::-webkit-scrollbar-thumb:hover { background:#6b4423; }
+
+/* --- BACKGROUNDS --- */
+.dungeon-atmosphere { background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%); }
+.stone-texture      { background-image:
+     radial-gradient(circle at 25% 25%, #2a2a2a 2px, transparent 2px),
+     radial-gradient(circle at 75% 75%, #1a1a1a 1px, transparent 1px);
+  background-size:50px 50px; }
+
+.glow-text     { text-shadow:0 0 5px currentColor,0 0 10px currentColor,0 0 15px currentColor; }
+.monster-glow  { filter:drop-shadow(0 0 20px rgba(139,0,0,.5)); }
+
+/* --- DAMAGE FLOAT --- */
+@keyframes damageFloat {
+  0%   { opacity:1; transform:translateY(0)  scale(1); }
+  50%  { opacity:1; transform:translateY(-30px) scale(1.2); }
+  100% { opacity:0; transform:translateY(-60px) scale(.8); }
+}
+.damage-number { animation:damageFloat 2s ease-out forwards; pointer-events:none;
+                 font-weight:bold; text-shadow:2px 2px 4px rgba(0,0,0,.8); }
+
+/* --- MOBILE MENU ANIMATIONS --- */
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+.mobile-menu-enter {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.mobile-menu-exit {
+  animation: slideOutLeft 0.3s ease-in;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+  .stat-box {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .stat-box h3 {
+    font-size: 16px;
+  }
+  
+  .stat-bar {
+    height: 6px !important;
+  }
+  
+  .mobile-monster-container {
+    padding-top: 60px; /* Space for hamburger button */
+  }
+}
+
+/* --- DESKTOP LAYOUT --- */
+@media (min-width: 769px) {
+  .desktop-stats-container {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 256px;
+    z-index: 30;
+  }
+}
