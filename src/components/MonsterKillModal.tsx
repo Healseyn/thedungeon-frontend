@@ -29,7 +29,7 @@ const MonsterKillModal: FC<MonsterKillModalProps> = ({ spawn, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div className="bg-dungeon-surface/95 border-2 border-dungeon-border rounded-xl p-6 w-full max-w-md relative shadow-2xl">
+      <div className="bg-dungeon-surface/95 border-2 border-dungeon-border rounded-xl p-8 w-full max-w-2xl relative shadow-2xl">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-400 hover:text-white"
