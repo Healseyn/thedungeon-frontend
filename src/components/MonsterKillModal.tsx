@@ -28,8 +28,8 @@ const MonsterKillModal: FC<MonsterKillModalProps> = ({ spawn, onClose }) => {
     a.length <= 10 ? a : `${a.slice(0, 4)}…${a.slice(-4)}`;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center">
-      <div className="bg-dungeon-surface/95 border-2 border-dungeon-border rounded-xl p-6 w-full max-w-md mx-4 relative shadow-2xl">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+      <div className="bg-dungeon-surface/95 border-2 border-dungeon-border rounded-xl p-6 w-full max-w-md relative shadow-2xl">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-400 hover:text-white"
@@ -46,14 +46,21 @@ const MonsterKillModal: FC<MonsterKillModalProps> = ({ spawn, onClose }) => {
           Defeated at {new Date(spawn.defeatedAt).toLocaleString()}
         </div>
         <div className="space-y-1 max-h-60 overflow-y-auto custom-scrollbar text-sm">
+          <div className="grid grid-cols-4 text-xs text-gray-400 font-semibold mb-1">
+            <span>Player</span>
+            <span className="text-right">DMG</span>
+            <span className="text-right">Coins</span>
+            <span className="text-right">XP</span>
+          </div>
           {spawn.damageByPlayer.map((p, idx) => (
-            <div key={idx} className="flex justify-between">
-              <span className="text-gray-200 truncate">
-                {formatAddr(p.walletAddress)}
-              </span>
-              <span className="text-red-400 font-mono">{p.damage}</span>
-              <span className="text-yellow-400 font-mono">+{p.coinsEarned}</span>
-              <span className="text-green-400 font-mono">+{p.xpGained}xp</span>
+            <div
+              key={idx}
+              className="grid grid-cols-4 gap-2 py-0.5 rounded hover:bg-dungeon-accent/20"
+            >
+              <span className="truncate text-gray-200">{formatAddr(p.walletAddress)}</span>
+              <span className="text-red-400 font-mono text-right">{p.damage}</span>
+              <span className="text-yellow-400 font-mono text-right">{p.coinsEarned}</span>
+              <span className="text-green-400 font-mono text-right">{p.xpGained}</span>
             </div>
           ))}
         </div>
