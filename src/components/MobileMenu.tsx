@@ -1,11 +1,12 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { X, Menu, BarChart3, Users, Sword, PackageOpen } from 'lucide-react';
+import { X, Menu, BarChart3, Users, Sword, PackageOpen, Skull } from 'lucide-react';
 import PlayerStats from './PlayerStats';
 import Leaderboard from './Leaderboard';
 import MonsterDamageBoard from './MonsterDamageBoard';
 import TreasureBox from './TreasureBox';
+import MonsterKillHistory from './MonsterKillHistory';
 import Image from "next/image";
 
 
@@ -39,6 +40,13 @@ interface MobileMenuProps {
   selfWallet?: string;
   xp: number;
   tokens: number;
+  killHistory: Array<{
+    monsterName: string;
+    level: number;
+    xp: number;
+    tokens: number;
+    killedAt: number;
+  }>;
 }
 
 const MobileMenu: FC<MobileMenuProps> = ({
@@ -47,10 +55,11 @@ const MobileMenu: FC<MobileMenuProps> = ({
   bossDamageEntries,
   selfWallet,
   xp,
-  tokens
+  tokens,
+  killHistory
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'stats' | 'leaderboard' | 'damage' | 'loot'>('stats');
+  const [activeTab, setActiveTab] = useState<'stats' | 'leaderboard' | 'damage' | 'loot' | 'history'>('stats');
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -59,6 +68,7 @@ const MobileMenu: FC<MobileMenuProps> = ({
     { id: 'leaderboard' as const, label: 'Ranking', icon: Users },
     { id: 'damage' as const, label: 'Boss DMG', icon: Sword },
     { id: 'loot' as const, label: 'Loot', icon: PackageOpen },
+    { id: 'history' as const, label: 'Kills', icon: Skull },
   ];
 
   return (
@@ -148,6 +158,12 @@ const MobileMenu: FC<MobileMenuProps> = ({
           {activeTab === 'loot' && (
             <div className="space-y-4">
               <TreasureBox xp={xp} tokens={tokens} />
+            </div>
+          )}
+
+          {activeTab === 'history' && (
+            <div className="space-y-4">
+              <MonsterKillHistory history={killHistory} />
             </div>
           )}
         </div>

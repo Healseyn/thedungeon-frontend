@@ -11,6 +11,7 @@ import SpellSelector from '@/components/SpellSelector';
 import MonsterDamageBoard from '@/components/MonsterDamageBoard';
 import TreasureBox from '@/components/TreasureBox';
 import MobileMenu from '@/components/MobileMenu';
+import MonsterKillHistory from '@/components/MonsterKillHistory';
 import Footer from '@/components/Footer';
 import { devLog } from '@/lib/devLog';
 import Image from 'next/image';
@@ -26,6 +27,7 @@ export default function Home() {
     bossDamage,
     xpGain,
     spellCast,
+    killHistory,
     attack,
     connectWallet
   } = useSocket();
@@ -243,6 +245,7 @@ export default function Home() {
         selfWallet={walletAddress ?? undefined}
         xp={lootXp}
         tokens={lootTokens}
+        killHistory={killHistory}
       />
 
       {/* Wallet button - always top right */}
@@ -253,6 +256,11 @@ export default function Home() {
       {/* Loot chest - desktop only */}
       <div className="hidden md:block absolute bottom-28 right-4 z-40">
         <TreasureBox xp={lootXp} tokens={lootTokens} />
+      </div>
+
+      {/* Kill history - desktop only */}
+      <div className="hidden md:block absolute top-20 right-4 z-40">
+        <MonsterKillHistory history={killHistory} />
       </div>
 
       {/* Desktop layout */}
