@@ -108,6 +108,7 @@ export const useSocket = () => {
   const [currentMonsterId, setCurrentMonsterId] = useState<string | null>(null);
   const [nextMonster, setNextMonster] = useState<Monster | null>(null);
   const [xpGain, setXpGain] = useState<number | null>(null);
+  const [spellCast, setSpellCast] = useState<string | null>(null);
 
   /* ---------- Clean up old floating damages ---------- */
 
@@ -201,6 +202,11 @@ export const useSocket = () => {
     /* manual stats update */
     s.on('playerData', (data: PlayerStats) => {
       setPlayerStats(data);
+    });
+
+    /* spell effects */
+    s.on('spellCast', (data: { spell: string }) => {
+      setSpellCast(`${data.spell}-${Date.now()}`);
     });
 
     /* attack response */
@@ -380,6 +386,7 @@ export const useSocket = () => {
     bossDamage,
     currentMonsterId,
     xpGain,
+    spellCast,
 
     /* wallet helpers */
     walletAddress,

@@ -3,45 +3,53 @@
 import { FC, useState } from 'react';
 import { Copy, X, HelpCircle } from 'lucide-react';
 
+/* --------------------------------------------------------------------------------
+ * Spell data
+ * ------------------------------------------------------------------------------ */
+
 interface Spell {
-  id: string;
-  name: string;
-  emoji: string;
-  cost: number;
-  damage: number;
-  description: string;
+  id: string;          // internal id used by the back-end
+  name: string;        // UI label
+  emoji: string;       // nice visual
+  cost: number;        // token cost
+  description: string; // tooltip text
 }
 
 const SPELL_ADDRESS = 'SPELL11111111111111111111111111111111111111';
 
+/**
+ *  Update this list when a new spell is added to the game logic.
+ */
 const spells: Spell[] = [
   {
-    id: 'meteor',
-    name: 'Meteor Strike',
-    emoji: '☄️',
-    cost: 1000,
-    damage: 50000,
-    description: 'Deals 50,000 damage (does not count as your damage)'
+    id: 'void',
+    name: 'Void Sigil',
+    emoji: '🌀',
+    cost: 10_000,
+    description: 'Removes 50 % of the MONSTER CURRENT HP (does not count as your damage).'
   },
   {
     id: 'fireball',
     name: 'Fireball',
     emoji: '🔥',
-    cost: 250,
-    damage: 5000,
-    description: 'Engulfs the boss in flames for 5,000 damage'
+    cost: 1_000,
+    description: 'Burns the monster for 15 % of its CURRENT HP (does not count as your damage).'
   },
   {
-    id: 'bolt',
-    name: 'Magic Bolt',
-    emoji: '⚡',
-    cost: 50,
-    damage: 1000,
-    description: 'Strikes for 1,000 damage'
-  }
+    id: 'heal',
+    name: 'Healing Wave',
+    emoji: '✨',
+    cost: 500,
+    description: 'Restores 10 % of MONSTER HP. No damage dealt.'
+  },
 ];
 
+/* --------------------------------------------------------------------------------
+ * Component
+ * ------------------------------------------------------------------------------ */
+
 interface SpellSelectorProps {
+  /** When `false` the whole widget fades out. */
   visible?: boolean;
 }
 
@@ -49,11 +57,12 @@ const SpellSelector: FC<SpellSelectorProps> = ({ visible = true }) => {
   const [copied, setCopied] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
+  /* Copies the on-chain address to clipboard */
   const copyAddress = async () => {
     try {
       await navigator.clipboard.writeText(SPELL_ADDRESS);
       setCopied('addr');
-      setTimeout(() => setCopied(null), 1500);
+      setTimeout(() => setCopied(null), 1_500);
     } catch (err) {
       console.error('Failed to copy spell address', err);
     }
@@ -61,17 +70,27 @@ const SpellSelector: FC<SpellSelectorProps> = ({ visible = true }) => {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-24 md:bottom-28 z-50 flex flex-col items-center pointer-events-none transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed inset-x-0 bottom-24 md:bottom-28 z-50 flex flex-col items-center pointer-events-none transition-opacity duration-500 ${
+        visible ? 'opacity-100' : 'opacity-0'
+      }`}
     >
+      {/* -------- Drawer -------- */}
       {open && (
         <div className="pointer-events-auto w-full max-w-2xl mx-auto bg-dungeon-surface/95 backdrop-blur-md border-t border-dungeon-border rounded-t-lg shadow-2xl p-4 mb-2 transform transition-transform">
+          {/* Header */}
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-dungeon font-bold text-dungeon-gold glow-text">Spells</h3>
-            <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white">
+            <h3 className="text-lg font-dungeon font-bold text-dungeon-gold glow-text">
+              Spells
+            </h3>
+            <button
+              onClick={() => setOpen(false)}
+              className="text-gray-400 hover:text-white"
+            >
               <X className="w-5 h-5" />
             </button>
           </div>
 
+          {/* Payment instruction */}
           <div className="text-center mb-4 text-xs text-gray-300">
             Send the spell cost to{' '}
             <span className="font-mono text-yellow-400">{SPELL_ADDRESS}</span>
@@ -84,6 +103,7 @@ const SpellSelector: FC<SpellSelectorProps> = ({ visible = true }) => {
             </button>
           </div>
 
+          {/* Spell cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {spells.map(spell => (
               <div
@@ -91,24 +111,33 @@ const SpellSelector: FC<SpellSelectorProps> = ({ visible = true }) => {
                 className="bg-dungeon-surface border border-dungeon-border rounded-lg p-3 text-center space-y-1 hover:bg-dungeon-accent/50 transition-colors"
               >
                 <div className="text-2xl">{spell.emoji}</div>
-                <div className="font-bold text-dungeon-gold text-sm">{spell.name}</div>
+                <div className="font-bold text-dungeon-gold text-sm">
+                  {spell.name}
+                </div>
                 <div className="text-gray-400 text-xs">{spell.description}</div>
                 <div className="text-xs text-gray-300">
-                  Cost: <span className="text-yellow-400 font-bold">{spell.cost}</span>
+                  Cost:{' '}
+                  <span className="text-yellow-400 font-bold">{spell.cost}</span>
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Tooltip helper */}
           <div className="flex justify-end mt-4">
             <div className="relative group">
               <HelpCircle className="w-5 h-5 text-gray-400 hover:text-white" />
               <div className="pointer-events-none absolute bottom-full right-0 mb-2 w-72 bg-dungeon-surface border border-dungeon-border text-gray-300 text-xs p-2 rounded-lg opacity-0 group-hover:opacity-100 transition">
-                Send tokens equal to the spell cost to the address above. Once received, the chosen spell will be cast on the boss. All spells share the same address.
+                Send tokens equal to the spell cost to the address above. Once
+                received, the chosen spell will be cast on the boss. All spells
+                share the same address.
               </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* -------- Toggle button -------- */}
       <div className="flex items-center space-x-2 pointer-events-auto mb-3">
         <button
           onClick={() => setOpen(o => !o)}

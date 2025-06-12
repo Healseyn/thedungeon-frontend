@@ -25,6 +25,7 @@ export default function Home() {
     damageEvents,
     bossDamage,
     xpGain,
+    spellCast,
     attack,
     connectWallet
   } = useSocket();
@@ -274,6 +275,7 @@ export default function Home() {
           damageEvents={damageEvents}
           selfWallet={walletAddress ?? undefined}
           xpGain={xpGain}
+          spellCast={"meteorFall"}
           onFirstAttack={() => setShowSpells(true)}
           onAttack={(...params) => {
             devLog('Attack triggered from UI', params);
