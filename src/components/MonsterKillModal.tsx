@@ -28,8 +28,8 @@ const MonsterKillModal: FC<MonsterKillModalProps> = ({ spawn, onClose }) => {
     a.length <= 10 ? a : `${a.slice(0, 4)}…${a.slice(-4)}`;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div className="bg-dungeon-surface/95 border-2 border-dungeon-border rounded-xl p-8 w-full max-w-2xl relative shadow-2xl">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 p-4">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dungeon-surface/95 border-2 border-dungeon-border rounded-xl p-8 w-full max-w-2xl shadow-2xl">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-400 hover:text-white"
