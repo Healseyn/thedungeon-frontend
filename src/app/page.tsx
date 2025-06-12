@@ -27,7 +27,6 @@ export default function Home() {
     bossDamage,
     xpGain,
     spellCast,
-    killHistory,
     attack,
     connectWallet
   } = useSocket();
@@ -245,7 +244,6 @@ export default function Home() {
         selfWallet={walletAddress ?? undefined}
         xp={lootXp}
         tokens={lootTokens}
-        killHistory={killHistory}
       />
 
       {/* Wallet button - always top right */}
@@ -260,7 +258,7 @@ export default function Home() {
 
       {/* Kill history - desktop only */}
       <div className="hidden md:block absolute top-20 right-4 z-40">
-        <MonsterKillHistory history={killHistory} />
+        <MonsterKillHistory />
       </div>
 
       {/* Desktop layout */}

@@ -109,13 +109,6 @@ export const useSocket = () => {
   const [nextMonster, setNextMonster] = useState<Monster | null>(null);
   const [xpGain, setXpGain] = useState<number | null>(null);
   const [spellCast, setSpellCast] = useState<string | null>(null);
-  const [killHistory, setKillHistory] = useState<{
-    monsterName: string;
-    level: number;
-    xp: number;
-    tokens: number;
-    killedAt: number;
-  }[]>([]);
 
   /* ---------- Clean up old floating damages ---------- */
 
@@ -295,20 +288,6 @@ export const useSocket = () => {
 
       // if the monster died, reset for the next one
       if (response.monsterKilled && response.newMonster) {
-        if (response.monster) {
-          const lvl = response.monster.level ?? 1;
-          const reward = lvl * 100;
-          setKillHistory(prev => [
-            {
-              monsterName: response.monster!.name,
-              level: lvl,
-              xp: reward,
-              tokens: reward,
-              killedAt: response.timestamp || Date.now()
-            },
-            ...prev
-          ].slice(0, 10));
-        }
         setBossDamage({});
         setCurrentMonsterId(response.newMonster.id);
         setDamageEvents([]);
@@ -408,7 +387,6 @@ export const useSocket = () => {
     currentMonsterId,
     xpGain,
     spellCast,
-    killHistory,
 
     /* wallet helpers */
     walletAddress,

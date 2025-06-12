@@ -40,13 +40,6 @@ interface MobileMenuProps {
   selfWallet?: string;
   xp: number;
   tokens: number;
-  killHistory: Array<{
-    monsterName: string;
-    level: number;
-    xp: number;
-    tokens: number;
-    killedAt: number;
-  }>;
 }
 
 const MobileMenu: FC<MobileMenuProps> = ({
@@ -55,8 +48,7 @@ const MobileMenu: FC<MobileMenuProps> = ({
   bossDamageEntries,
   selfWallet,
   xp,
-  tokens,
-  killHistory
+  tokens
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'stats' | 'leaderboard' | 'damage' | 'loot' | 'history'>('stats');
@@ -163,7 +155,7 @@ const MobileMenu: FC<MobileMenuProps> = ({
 
           {activeTab === 'history' && (
             <div className="space-y-4">
-              <MonsterKillHistory history={killHistory} />
+              <MonsterKillHistory />
             </div>
           )}
         </div>
