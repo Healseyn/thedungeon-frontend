@@ -4,6 +4,9 @@ import { FC, useEffect, useState } from 'react';
 import { Skull } from 'lucide-react';
 import MonsterKillModal from './MonsterKillModal';
 
+const SOCKET_URL =
+  process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001';
+
 interface PlayerDamage {
   walletAddress: string;
   damage: number;
@@ -30,7 +33,9 @@ const MonsterKillHistory: FC<MonsterKillHistoryProps> = ({ limit = 5 }) => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await fetch(`/api/game/spawns?limit=${limit}`);
+        const res = await fetch(
+          `${SOCKET_URL}/api/game/spawns?limit=${limit}`
+        );
         if (res.ok) {
           const data = await res.json();
           setHistory(data);
