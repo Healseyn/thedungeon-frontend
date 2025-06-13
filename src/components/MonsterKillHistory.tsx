@@ -12,13 +12,15 @@ interface PlayerDamage {
   walletAddress: string;
   damage: number;
   xpGained: number;
-  coinsEarned: number;
+  tokensEarned: number;
 }
 
 interface SpawnRecord {
   spawnId: string;
   templateName: string;
   level: number;
+  maxHealth?: number;
+  createdAt?: string;
   defeatedAt: string;
   damageByPlayer: PlayerDamage[];
 }

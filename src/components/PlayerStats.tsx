@@ -8,7 +8,7 @@ interface PlayerData {
   level: number;
   experience: number;
   totalDamage: number;
-  coins: number;
+  tokenBalance: number;
   damage: number;
   attackCount: number;
   isOnline: boolean;
@@ -98,9 +98,9 @@ const PlayerStats: FC<PlayerStatsProps> = ({ player }) => {
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-gray-300 text-sm">Coins:</span>
+            <span className="text-gray-300 text-sm">Tokens:</span>
             <span className="text-yellow-400 font-bold">
-              {player.coins.toLocaleString()}
+              {player.tokenBalance.toLocaleString()}
             </span>
           </div>
 

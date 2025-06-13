@@ -11,12 +11,14 @@ import VoidSigilSpell from './spells/VoidSigilSpell';
 /* ---------- Types ---------- */
 interface Monster {
   id: string;
+  spawnId: string;
   name: string;
   image: string;
   maxHealth: number;
   currentHealth: number;
   level: number;
   createdAt: number;
+  healthPercentage?: number;
 }
 
 interface DamageEvent {

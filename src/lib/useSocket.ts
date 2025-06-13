@@ -18,6 +18,7 @@ interface DamageEvent {
 
 interface Monster {
   id: string;
+  spawnId: string;
   name: string;
   /** Path to monster image */
   image: string;
@@ -25,6 +26,7 @@ interface Monster {
   currentHealth: number;
   level: number;
   createdAt: number;
+  healthPercentage: number;
 }
 
 interface Player {
@@ -33,6 +35,9 @@ interface Player {
   isOnline: boolean;
   level: number;
   walletAddress: string;
+  tokenBalance: number;
+  totalDamage: number;
+  attackCount: number;
 }
 
 interface PlayerStats {
@@ -41,7 +46,7 @@ interface PlayerStats {
   level: number;
   experience: number;
   totalDamage: number;
-  coins: number;
+  tokenBalance: number;
   damage: number;
   attackCount: number;
   isOnline: boolean;
@@ -61,11 +66,10 @@ interface AttackResponse {
     playerUpdate: {
       level: number;
       experience: number;
-      coins: number;
+      tokenBalance: number;
       totalDamage: number;
       damage: number;
     };
-    leveledUp: boolean;
   };
   damageEvent?: DamageEvent;
   monster?: Monster;
@@ -151,7 +155,7 @@ export const useSocket = () => {
         });
       }
 
-      setCurrentMonsterId(state.monster.id);
+      setCurrentMonsterId(state.monster.spawnId);
       const tally: Record<string, number> = {};
       state.damageEvents.forEach(ev => {
         tally[ev.walletAddress] = (tally[ev.walletAddress] || 0) + ev.damage;
@@ -269,14 +273,21 @@ export const useSocket = () => {
             players[idx] = {
               ...players[idx],
               damage: players[idx].damage + response.damageEvent.damage,
+              totalDamage:
+                players[idx].totalDamage + response.damageEvent.damage,
+              attackCount: players[idx].attackCount + 1,
               level: response.attacker?.playerUpdate.level ?? players[idx].level,
-              isOnline: true
+              isOnline: true,
+              tokenBalance: players[idx].tokenBalance
             };
           } else {
             players.push({
               name: response.damageEvent.playerName,
               walletAddress: response.damageEvent.walletAddress,
               damage: response.damageEvent.damage,
+              totalDamage: response.damageEvent.damage,
+              attackCount: 1,
+              tokenBalance: 0,
               level: response.attacker?.playerUpdate.level ?? 1,
               isOnline: true
             });
@@ -289,7 +300,7 @@ export const useSocket = () => {
       // if the monster died, reset for the next one
       if (response.monsterKilled && response.newMonster) {
         setBossDamage({});
-        setCurrentMonsterId(response.newMonster.id);
+        setCurrentMonsterId(response.newMonster.spawnId);
         setDamageEvents([]);
         const monsterWithImage = {
           ...response.newMonster,

@@ -8,7 +8,7 @@ interface PlayerDamage {
   walletAddress: string;
   damage: number;
   xpGained: number;
-  coinsEarned: number;
+  tokensEarned: number;
 }
 
 interface SpawnRecord {
@@ -50,7 +50,7 @@ const MonsterKillModal: FC<MonsterKillModalProps> = ({ spawn, onClose }) => {
           <div className="grid grid-cols-4 text-xs text-gray-400 font-semibold mb-1">
             <span>Player</span>
             <span className="text-right">DMG</span>
-            <span className="text-right">Coins</span>
+            <span className="text-right">Tokens</span>
             <span className="text-right">XP</span>
           </div>
           {spawn.damageByPlayer.map((p, idx) => (
@@ -60,7 +60,7 @@ const MonsterKillModal: FC<MonsterKillModalProps> = ({ spawn, onClose }) => {
             >
               <span className="truncate text-gray-200">{formatAddr(p.walletAddress)}</span>
               <span className="text-red-400 font-mono text-right">{p.damage}</span>
-              <span className="text-yellow-400 font-mono text-right">{p.coinsEarned}</span>
+              <span className="text-yellow-400 font-mono text-right">{p.tokensEarned}</span>
               <span className="text-green-400 font-mono text-right">{p.xpGained}</span>
             </div>
           ))}
