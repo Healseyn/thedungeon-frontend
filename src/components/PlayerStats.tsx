@@ -1,6 +1,7 @@
 'use client';
 
 import { FC } from 'react';
+import { HelpCircle } from 'lucide-react';
 
 interface PlayerData {
   walletAddress: string;
@@ -84,7 +85,15 @@ const PlayerStats: FC<PlayerStatsProps> = ({ player }) => {
         {/* Stats Grid - responsive */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
           <div className="flex items-center justify-between">
-            <span className="text-gray-300 text-sm">Damage/Click:</span>
+            <div className="flex items-center space-x-1">
+              <span className="text-gray-300 text-sm">Damage/Click:</span>
+              <div className="relative group">
+                <HelpCircle className="w-3 h-3 text-gray-400 hover:text-white" />
+                <div className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-dungeon-surface border border-dungeon-border text-gray-300 text-xs p-2 rounded-lg opacity-0 group-hover:opacity-100 transition">
+                  damage = (token balance/1000) * lvl bonus (min 1)
+                </div>
+              </div>
+            </div>
             <span className="text-red-400 font-bold">
               {player.damage}
             </span>
@@ -98,7 +107,7 @@ const PlayerStats: FC<PlayerStatsProps> = ({ player }) => {
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-gray-300 text-sm">Tokens:</span>
+            <span className="text-gray-300 text-sm">Token Balance:</span>
             <span className="text-yellow-400 font-bold">
               {player.tokenBalance.toLocaleString()}
             </span>
