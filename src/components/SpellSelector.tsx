@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Copy, X, HelpCircle } from 'lucide-react';
 
 /* --------------------------------------------------------------------------------
@@ -15,34 +15,9 @@ interface Spell {
   description: string; // tooltip text
 }
 
-const SPELL_ADDRESS = 'SPELL11111111111111111111111111111111111111';
+const API_URL = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001';
 
-/**
- *  Update this list when a new spell is added to the game logic.
- */
-const spells: Spell[] = [
-  {
-    id: 'void',
-    name: 'Void Sigil',
-    emoji: '🌀',
-    cost: 10_000,
-    description: 'Removes 50 % of the MONSTER CURRENT HP (does not count as your damage).'
-  },
-  {
-    id: 'fireball',
-    name: 'Fireball',
-    emoji: '🔥',
-    cost: 1_000,
-    description: 'Burns the monster for 15 % of its CURRENT HP (does not count as your damage).'
-  },
-  {
-    id: 'heal',
-    name: 'Healing Wave',
-    emoji: '✨',
-    cost: 500,
-    description: 'Restores 10 % of MONSTER HP. No damage dealt.'
-  },
-];
+const PLACEHOLDER_ADDRESS = 'SPELL11111111111111111111111111111111111111';
 
 /* --------------------------------------------------------------------------------
  * Component
@@ -56,11 +31,32 @@ interface SpellSelectorProps {
 const SpellSelector: FC<SpellSelectorProps> = ({ visible = true }) => {
   const [copied, setCopied] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [spells, setSpells] = useState<Spell[]>([]);
+  const [spellAddress, setSpellAddress] = useState(PLACEHOLDER_ADDRESS);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [spellsRes, addrRes] = await Promise.all([
+          fetch(`${API_URL}/api/game/spells`),
+          fetch(`${API_URL}/api/game/spells/address`)
+        ]);
+        if (spellsRes.ok) setSpells(await spellsRes.json());
+        if (addrRes.ok) {
+          const data = await addrRes.json();
+          if (data.address) setSpellAddress(data.address);
+        }
+      } catch (err) {
+        console.error('Failed to fetch spells info', err);
+      }
+    };
+    fetchData();
+  }, []);
 
   /* Copies the on-chain address to clipboard */
   const copyAddress = async () => {
     try {
-      await navigator.clipboard.writeText(SPELL_ADDRESS);
+      await navigator.clipboard.writeText(spellAddress);
       setCopied('addr');
       setTimeout(() => setCopied(null), 1_500);
     } catch (err) {
@@ -93,7 +89,7 @@ const SpellSelector: FC<SpellSelectorProps> = ({ visible = true }) => {
           {/* Payment instruction */}
           <div className="text-center mb-4 text-xs text-gray-300">
             Send the spell cost to{' '}
-            <span className="font-mono text-yellow-400">{SPELL_ADDRESS}</span>
+            <span className="font-mono text-yellow-400">{spellAddress}</span>
             <button
               onClick={copyAddress}
               className="inline-flex items-center ml-2 space-x-1 text-gray-300 hover:text-white"

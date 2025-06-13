@@ -281,7 +281,7 @@ export default function Home() {
           damageEvents={damageEvents}
           selfWallet={walletAddress ?? undefined}
           xpGain={xpGain}
-          spellCast={"meteorFall"}
+          spellCast={spellCast}
           onFirstAttack={() => setShowSpells(true)}
           onAttack={(...params) => {
             devLog('Attack triggered from UI', params);
