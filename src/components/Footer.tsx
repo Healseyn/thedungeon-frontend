@@ -20,7 +20,7 @@ const Footer: FC<FooterProps> = ({
   onlineCount = 0
 }) => (
   <footer className="fixed bottom-0 left-0 right-0 bg-dungeon-surface/95 backdrop-blur-sm border-t border-dungeon-border z-40">
-    <div className="flex flex-col md:flex-row items-center px-4 py-3 space-y-2 md:space-y-0">
+    <div className="flex flex-col md:flex-row items-center px-2 md:px-4 py-2 md:py-3 space-y-1 md:space-y-0">
       {/* Connection Status */}
       <div className="flex items-center space-x-2 flex-1">
         <div
@@ -31,17 +31,17 @@ const Footer: FC<FooterProps> = ({
                 : 'bg-yellow-400 animate-pulse'
             }`}
         />
-        <span className="text-sm font-medium text-white">
+        <span className="text-xs md:text-sm font-medium text-white">
           {connectionError ? 'Disconnected' : isConnected ? 'Online' : 'Connecting…'}
         </span>
-        <span className="text-sm font-medium text-gray-400 ml-4">
+        <span className="text-xs md:text-sm font-medium text-gray-400 ml-4">
           warriors online {onlineCount}
         </span>
       </div>
 
       {/* Game Title */}
       <div className="text-center flex-1">
-        <h2 className="text-lg font-dungeon font-bold text-dungeon-gold glow-text">
+        <h2 className="text-base md:text-lg font-dungeon font-bold text-dungeon-gold glow-text">
           THE DUNGEON
         </h2>
       </div>
