@@ -273,14 +273,21 @@ export const useSocket = () => {
             players[idx] = {
               ...players[idx],
               damage: players[idx].damage + response.damageEvent.damage,
+              totalDamage:
+                players[idx].totalDamage + response.damageEvent.damage,
+              attackCount: players[idx].attackCount + 1,
               level: response.attacker?.playerUpdate.level ?? players[idx].level,
-              isOnline: true
+              isOnline: true,
+              tokenBalance: players[idx].tokenBalance
             };
           } else {
             players.push({
               name: response.damageEvent.playerName,
               walletAddress: response.damageEvent.walletAddress,
               damage: response.damageEvent.damage,
+              totalDamage: response.damageEvent.damage,
+              attackCount: 1,
+              tokenBalance: 0,
               level: response.attacker?.playerUpdate.level ?? 1,
               isOnline: true
             });
