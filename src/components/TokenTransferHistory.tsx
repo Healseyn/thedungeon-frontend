@@ -48,7 +48,7 @@ const TokenTransferHistory: FC<TokenTransferHistoryProps> = ({ limit = 5 }) => {
     <div className="bg-dungeon-surface/90 backdrop-blur-sm border border-dungeon-border rounded-lg p-3 shadow-lg w-56 text-sm">
       <h3 className="text-lg font-dungeon font-bold text-dungeon-gold mb-3 flex items-center space-x-2 glow-text">
         <Coins className="w-5 h-5" />
-        <span>Recent Tokens</span>
+        <span>Recent Airdrops</span>
       </h3>
       {transfers.length === 0 ? (
         <div className="text-gray-400 text-center py-4 text-sm">
