@@ -14,6 +14,7 @@ import MobileMenu from "@/components/MobileMenu";
 import MonsterKillHistory from "@/components/MonsterKillHistory";
 import SpellHistory from "@/components/SpellHistory";
 import TokenTransferHistory from "@/components/TokenTransferHistory";
+import PendingRewardsBubble from "@/components/PendingRewardsBubble";
 import Footer from "@/components/Footer";
 import LaunchCountdown from "@/components/LaunchCountdown";
 import { devLog } from "@/lib/devLog";
@@ -341,6 +342,9 @@ export default function Home() {
         />
         <SpellSelector visible={showSpells} />
       </div>
+
+      {/* Pending rewards bubble */}
+      <PendingRewardsBubble />
 
       {/* Footer */}
       <Footer
