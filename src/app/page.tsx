@@ -94,8 +94,8 @@ export default function Home() {
         const res = await fetch(`${SOCKET_URL}/api/game/rewards`);
         if (mounted && res.ok) {
           const data = await res.json();
-          setLootXp(Math.round(data.xpPool));
-          setLootTokens(Math.round(data.tokenPool));
+          setLootXp(Math.round(data.loot.xp));
+          setLootTokens(Math.round(data.loot.tokens));
         }
       } catch (err) {
         console.error("Failed to fetch rewards", err);
