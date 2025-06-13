@@ -78,8 +78,8 @@ const MonsterComponent: FC<MonsterComponentProps> = ({
   /* ---------- derive spell type & unique key ---------- */
   const { spellType, spellKey } = useMemo(() => {
     if (!spellCast) return { spellType: null, spellKey: null };
-    const [type] = spellCast.split('-'); // first chunk is the prefix
-    return { spellType: type, spellKey: spellCast };
+    const [id] = spellCast.split('-');
+    return { spellType: id, spellKey: spellCast };
   }, [spellCast]);
 
   /* ---------- floating damage handling ---------- */
@@ -183,7 +183,7 @@ const MonsterComponent: FC<MonsterComponentProps> = ({
       {/* monster image + spells */}
       <div className="relative">
         {/* dynamic spell render */}
-        {spellType === 'fire'   && <FireSpell      triggerKey={spellKey} />}
+        {spellType === 'fireball' && <FireSpell      triggerKey={spellKey} />}
         {spellType === 'heal'   && <HealingSpell   triggerKey={spellKey} />}
         {spellType === 'void'   && <VoidSigilSpell triggerKey={spellKey} />}
 

@@ -209,8 +209,13 @@ export const useSocket = () => {
     });
 
     /* spell effects */
-    s.on('spellCast', (data: { spell: string }) => {
-      setSpellCast(`${data.spell}-${Date.now()}`);
+    s.on('spellCast', (data: { caster: string; spellId: string; monster: Monster }) => {
+      const monsterWithImage = {
+        ...data.monster,
+        image: getMonsterImage(data.monster.name)
+      };
+      setGameState(prev => (prev ? { ...prev, monster: monsterWithImage } : null));
+      setSpellCast(`${data.spellId}-${Date.now()}`);
     });
 
     /* attack response */
