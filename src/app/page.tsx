@@ -12,6 +12,7 @@ import MonsterDamageBoard from '@/components/MonsterDamageBoard';
 import TreasureBox from '@/components/TreasureBox';
 import MobileMenu from '@/components/MobileMenu';
 import MonsterKillHistory from '@/components/MonsterKillHistory';
+import SpellHistory from '@/components/SpellHistory';
 import Footer from '@/components/Footer';
 import { devLog } from '@/lib/devLog';
 import Image from 'next/image';
@@ -256,9 +257,10 @@ export default function Home() {
         <TreasureBox xp={lootXp} tokens={lootTokens} />
       </div>
 
-      {/* Kill history - desktop only */}
-      <div className="hidden md:block absolute top-20 right-4 z-40">
+      {/* Kill and Spell history - desktop only */}
+      <div className="hidden md:block absolute top-20 right-4 z-40 space-y-4">
         <MonsterKillHistory />
+        <SpellHistory />
       </div>
 
       {/* Desktop layout */}
