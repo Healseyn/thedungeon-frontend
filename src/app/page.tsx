@@ -1,22 +1,23 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSocket } from '@/lib/useSocket';
-import { useSolanaWallet } from '@/lib/useSolanaWallet';
-import { SolanaConnect } from '@/components/SolanaConnect';
-import PlayerStats from '@/components/PlayerStats';
-import Leaderboard from '@/components/Leaderboard';
-import MonsterComponent from '@/components/MonsterComponent';
-import SpellSelector from '@/components/SpellSelector';
-import MonsterDamageBoard from '@/components/MonsterDamageBoard';
-import TreasureBox from '@/components/TreasureBox';
-import MobileMenu from '@/components/MobileMenu';
-import MonsterKillHistory from '@/components/MonsterKillHistory';
-import SpellHistory from '@/components/SpellHistory';
-import Footer from '@/components/Footer';
-import LaunchCountdown from '@/components/LaunchCountdown';
-import { devLog } from '@/lib/devLog';
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import { useSocket } from "@/lib/useSocket";
+import { useSolanaWallet } from "@/lib/useSolanaWallet";
+import { SolanaConnect } from "@/components/SolanaConnect";
+import PlayerStats from "@/components/PlayerStats";
+import Leaderboard from "@/components/Leaderboard";
+import MonsterComponent from "@/components/MonsterComponent";
+import SpellSelector from "@/components/SpellSelector";
+import MonsterDamageBoard from "@/components/MonsterDamageBoard";
+import TreasureBox from "@/components/TreasureBox";
+import MobileMenu from "@/components/MobileMenu";
+import MonsterKillHistory from "@/components/MonsterKillHistory";
+import SpellHistory from "@/components/SpellHistory";
+import TokenTransferHistory from "@/components/TokenTransferHistory";
+import Footer from "@/components/Footer";
+import LaunchCountdown from "@/components/LaunchCountdown";
+import { devLog } from "@/lib/devLog";
+import Image from "next/image";
 
 export default function Home() {
   const launchAtStr = process.env.NEXT_PUBLIC_LAUNCH_AT;
@@ -37,15 +38,15 @@ export default function Home() {
     spellCast,
     currentMonsterId,
     attack,
-    connectWallet
+    connectWallet,
   } = useSocket();
 
-  const onlineCount = gameState?.players.filter(p => p.isOnline).length || 0;
+  const onlineCount = gameState?.players.filter((p) => p.isOnline).length || 0;
 
   const {
     connected: walletConnected,
     address: walletAddress,
-    shortAddress
+    shortAddress,
   } = useSolanaWallet();
 
   const [showSpells, setShowSpells] = useState(false);
@@ -54,32 +55,39 @@ export default function Home() {
 
   // Initial mount log
   useEffect(() => {
-    devLog('Home page mounted');
-    return () => devLog('Home page unmounted');
+    devLog("Home page mounted");
+    return () => devLog("Home page unmounted");
   }, []);
 
   // Wallet connection log
   useEffect(() => {
-    devLog('Wallet connection status changed', { walletConnected, walletAddress });
+    devLog("Wallet connection status changed", {
+      walletConnected,
+      walletAddress,
+    });
     if (walletConnected && walletAddress) {
-      devLog('Wallet connected, registering player', { walletAddress });
+      devLog("Wallet connected, registering player", { walletAddress });
       connectWallet(walletAddress);
     }
   }, [walletConnected, walletAddress, connectWallet]);
 
   // Socket connection log
   useEffect(() => {
-    devLog('Socket connection status', { isConnected, connectionError });
+    devLog("Socket connection status", { isConnected, connectionError });
   }, [isConnected, connectionError]);
 
   // Game state or registration change log
   useEffect(() => {
-    devLog('Game state or registration status changed', { isRegistered, gameState });
+    devLog("Game state or registration status changed", {
+      isRegistered,
+      gameState,
+    });
   }, [isRegistered, gameState]);
 
   // Fetch rewards for the current monster
   useEffect(() => {
-    const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001';
+    const SOCKET_URL =
+      process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
     let mounted = true;
     const loadRewards = async () => {
       try {
@@ -90,7 +98,7 @@ export default function Home() {
           setLootTokens(Math.round(data.tokenPool));
         }
       } catch (err) {
-        console.error('Failed to fetch rewards', err);
+        console.error("Failed to fetch rewards", err);
       }
     };
     loadRewards();
@@ -103,7 +111,7 @@ export default function Home() {
 
   // Loading screen
   if (!isConnected && !connectionError) {
-    devLog('Rendering: loading screen, not connected yet');
+    devLog("Rendering: loading screen, not connected yet");
     return (
       <div className="min-h-screen bg-dungeon-bg dungeon-atmosphere flex items-center justify-center">
         <div className="text-center">
@@ -140,7 +148,7 @@ export default function Home() {
 
   // Connection error screen
   if (connectionError) {
-    devLog('Rendering: connection error screen', { connectionError });
+    devLog("Rendering: connection error screen", { connectionError });
     return (
       <div className="min-h-screen bg-dungeon-bg dungeon-atmosphere flex items-center justify-center">
         <div className="text-center max-w-md">
@@ -153,7 +161,7 @@ export default function Home() {
           </div>
           <button
             onClick={() => {
-              devLog('User clicked Try Again (reload)');
+              devLog("User clicked Try Again (reload)");
               window.location.reload();
             }}
             className="bg-dungeon-primary hover:bg-dungeon-secondary text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 border border-dungeon-border"
@@ -172,7 +180,7 @@ export default function Home() {
 
   // Wallet connection required screen
   if (!walletConnected) {
-    devLog('Rendering: wallet connection required screen');
+    devLog("Rendering: wallet connection required screen");
     return (
       <div className="min-h-screen bg-dungeon-bg dungeon-atmosphere flex items-center justify-center">
         <div className="absolute top-4 right-4 z-50">
@@ -194,7 +202,9 @@ export default function Home() {
             <h1 className="text-3xl font-dungeon font-bold text-dungeon-gold mb-2 glow-text">
               THE DUNGEON
             </h1>
-            <p className="text-gray-300 mb-4">Connect your Solana wallet to enter</p>
+            <p className="text-gray-300 mb-4">
+              Connect your Solana wallet to enter
+            </p>
             <p className="text-sm text-gray-400">
               Your wallet address will be your warrior identity
             </p>
@@ -214,20 +224,25 @@ export default function Home() {
 
   // Game loading or registration in progress
   if (!gameState || !isRegistered) {
-    devLog('Rendering: game loading or registration screen', { gameState, isRegistered, playerStats });
+    devLog("Rendering: game loading or registration screen", {
+      gameState,
+      isRegistered,
+      playerStats,
+    });
     return (
       <div className="min-h-screen bg-dungeon-bg dungeon-atmosphere flex items-center justify-center">
         <div className="text-center">
           <div className="text-5xl mb-4 animate-pulse">🎮</div>
           <div className="text-xl text-white mb-2">
-            {!isRegistered ? 'Registering warrior...' : 'Loading game...'}
+            {!isRegistered ? "Registering warrior..." : "Loading game..."}
           </div>
           <div className="text-sm text-gray-400 mt-2">
             Warrior: {shortAddress}
           </div>
           {playerStats && (
             <div className="text-sm text-green-400 mt-2">
-              Level {playerStats.level} • {playerStats.totalDamage.toLocaleString()} total damage
+              Level {playerStats.level} •{" "}
+              {playerStats.totalDamage.toLocaleString()} total damage
             </div>
           )}
         </div>
@@ -244,12 +259,14 @@ export default function Home() {
   const bossDamageEntries = Object.entries(bossDamage)
     .map(([wallet, dmg]) => ({
       walletAddress: wallet,
-      name: gameState.players.find(p => p.walletAddress === wallet)?.name ?? '???',
+      name:
+        gameState.players.find((p) => p.walletAddress === wallet)?.name ??
+        "???",
       damage: dmg,
     }))
     .sort((a, b) => b.damage - a.damage);
 
-  devLog('Rendering: main game screen', {
+  devLog("Rendering: main game screen", {
     playerStats,
     walletAddress,
     bossDamageEntries,
@@ -258,13 +275,12 @@ export default function Home() {
   });
 
   // Players list formatted for leaderboard components
-  const leaderboardPlayers = gameState.players.map(p => ({
+  const leaderboardPlayers = gameState.players.map((p) => ({
     walletAddress: p.walletAddress,
     name: p.name,
     totalDamage: (p as any).totalDamage ?? p.damage,
     isOnline: p.isOnline,
   }));
-
 
   // Main game screen
   return (
@@ -293,6 +309,7 @@ export default function Home() {
       <div className="hidden md:block absolute top-20 right-4 z-40 space-y-4">
         <MonsterKillHistory />
         <SpellHistory />
+        <TokenTransferHistory />
       </div>
 
       {/* Desktop layout */}
@@ -318,7 +335,7 @@ export default function Home() {
           spellCast={spellCast}
           onFirstAttack={() => setShowSpells(true)}
           onAttack={(...params) => {
-            devLog('Attack triggered from UI', params);
+            devLog("Attack triggered from UI", params);
             attack(...params);
           }}
         />

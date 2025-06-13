@@ -1,15 +1,25 @@
-'use client';
+"use client";
 
-import { FC, useState } from 'react';
-import { X, Menu, BarChart3, Users, Sword, PackageOpen, Skull, Sparkles } from 'lucide-react';
-import PlayerStats from './PlayerStats';
-import Leaderboard from './Leaderboard';
-import MonsterDamageBoard from './MonsterDamageBoard';
-import TreasureBox from './TreasureBox';
-import MonsterKillHistory from './MonsterKillHistory';
-import SpellHistory from './SpellHistory';
+import { FC, useState } from "react";
+import {
+  X,
+  Menu,
+  BarChart3,
+  Users,
+  Sword,
+  PackageOpen,
+  Skull,
+  Sparkles,
+  Coins,
+} from "lucide-react";
+import PlayerStats from "./PlayerStats";
+import Leaderboard from "./Leaderboard";
+import MonsterDamageBoard from "./MonsterDamageBoard";
+import TreasureBox from "./TreasureBox";
+import MonsterKillHistory from "./MonsterKillHistory";
+import SpellHistory from "./SpellHistory";
+import TokenTransferHistory from "./TokenTransferHistory";
 import Image from "next/image";
-
 
 interface PlayerData {
   walletAddress: string;
@@ -49,20 +59,29 @@ const MobileMenu: FC<MobileMenuProps> = ({
   bossDamageEntries,
   selfWallet,
   xp,
-  tokens
+  tokens,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'stats' | 'leaderboard' | 'damage' | 'loot' | 'history' | 'spells'>('stats');
+  const [activeTab, setActiveTab] = useState<
+    | "stats"
+    | "leaderboard"
+    | "damage"
+    | "loot"
+    | "history"
+    | "spells"
+    | "airdrops"
+  >("stats");
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const tabs = [
-    { id: 'stats' as const, label: 'Stats', icon: BarChart3 },
-    { id: 'leaderboard' as const, label: 'Ranking', icon: Users },
-    { id: 'damage' as const, label: 'Boss DMG', icon: Sword },
-    { id: 'loot' as const, label: 'Loot', icon: PackageOpen },
-    { id: 'history' as const, label: 'Kills', icon: Skull },
-    { id: 'spells' as const, label: 'Spells', icon: Sparkles },
+    { id: "stats" as const, label: "Stats", icon: BarChart3 },
+    { id: "leaderboard" as const, label: "Ranking", icon: Users },
+    { id: "damage" as const, label: "Boss DMG", icon: Sword },
+    { id: "loot" as const, label: "Loot", icon: PackageOpen },
+    { id: "history" as const, label: "Kills", icon: Skull },
+    { id: "spells" as const, label: "Spells", icon: Sparkles },
+    { id: "airdrops" as const, label: "Airdrops", icon: Coins },
   ];
 
   return (
@@ -90,8 +109,9 @@ const MobileMenu: FC<MobileMenuProps> = ({
 
       {/* Side Menu */}
       <div
-        className={`md:hidden fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-dungeon-surface/95 backdrop-blur-md border-r border-dungeon-border shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        className={`md:hidden fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-dungeon-surface/95 backdrop-blur-md border-r border-dungeon-border shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         {/* Menu Header */}
         <div className="flex items-center justify-between p-4 border-b border-dungeon-border">
@@ -114,10 +134,11 @@ const MobileMenu: FC<MobileMenuProps> = ({
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center space-x-2 py-3 px-2 text-sm font-medium transition-colors ${activeTab === tab.id
-                    ? 'text-dungeon-gold border-b-2 border-dungeon-gold bg-dungeon-accent/30'
-                    : 'text-gray-400 hover:text-white hover:bg-dungeon-accent/20'
-                  }`}
+                className={`flex-1 flex items-center justify-center space-x-2 py-3 px-2 text-sm font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? "text-dungeon-gold border-b-2 border-dungeon-gold bg-dungeon-accent/30"
+                    : "text-gray-400 hover:text-white hover:bg-dungeon-accent/20"
+                }`}
               >
                 <Icon className="w-4 h-4" />
                 <span className="hidden sm:inline">{tab.label}</span>
@@ -128,19 +149,19 @@ const MobileMenu: FC<MobileMenuProps> = ({
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4">
-          {activeTab === 'stats' && (
+          {activeTab === "stats" && (
             <div className="space-y-4">
               <PlayerStats player={playerStats} />
             </div>
           )}
 
-          {activeTab === 'leaderboard' && (
+          {activeTab === "leaderboard" && (
             <div className="space-y-4">
               <Leaderboard players={players} selfWallet={selfWallet} />
             </div>
           )}
 
-          {activeTab === 'damage' && (
+          {activeTab === "damage" && (
             <div className="space-y-4">
               <MonsterDamageBoard
                 entries={bossDamageEntries}
@@ -149,21 +170,27 @@ const MobileMenu: FC<MobileMenuProps> = ({
             </div>
           )}
 
-          {activeTab === 'loot' && (
+          {activeTab === "loot" && (
             <div className="space-y-4">
               <TreasureBox xp={xp} tokens={tokens} />
             </div>
           )}
 
-          {activeTab === 'history' && (
+          {activeTab === "history" && (
             <div className="space-y-4">
               <MonsterKillHistory />
             </div>
           )}
 
-          {activeTab === 'spells' && (
+          {activeTab === "spells" && (
             <div className="space-y-4">
               <SpellHistory />
+            </div>
+          )}
+
+          {activeTab === "airdrops" && (
+            <div className="space-y-4">
+              <TokenTransferHistory />
             </div>
           )}
         </div>
