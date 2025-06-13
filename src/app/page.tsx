@@ -14,10 +14,17 @@ import MobileMenu from '@/components/MobileMenu';
 import MonsterKillHistory from '@/components/MonsterKillHistory';
 import SpellHistory from '@/components/SpellHistory';
 import Footer from '@/components/Footer';
+import LaunchCountdown from '@/components/LaunchCountdown';
 import { devLog } from '@/lib/devLog';
 import Image from 'next/image';
 
 export default function Home() {
+  const launchAtStr = process.env.NEXT_PUBLIC_LAUNCH_AT;
+  const launchDate = launchAtStr ? new Date(launchAtStr) : null;
+  if (launchDate && Date.now() < launchDate.getTime()) {
+    return <LaunchCountdown launchAt={launchDate} />;
+  }
+
   const {
     isConnected,
     connectionError,

@@ -24,11 +24,14 @@ npm install
 
 # 2. Configure the Socket.IO backend URL
 echo "NEXT_PUBLIC_SOCKET_URL=https://api.yourdomain.com" > .env.local
+# 3. (Optional) Set the launch date and time to enable the countdown
+# ISO 8601 format example: 2024-07-30T15:00:00Z
+echo "NEXT_PUBLIC_LAUNCH_AT=YYYY-MM-DDTHH:MM:SSZ" >> .env.local
 
-# 3. Run in development
+# 4. Run in development
 npm run dev
 
-# 4. Build for production
+# 5. Build for production
 npm run build && npm start
 ```
 
