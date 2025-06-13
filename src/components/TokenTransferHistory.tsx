@@ -37,7 +37,7 @@ const TokenTransferHistory: FC<TokenTransferHistoryProps> = ({ limit = 5 }) => {
 
   useEffect(() => {
     fetchTransfers();
-    const id = setInterval(fetchTransfers, 10000);
+    const id = setInterval(fetchTransfers, 180000);
     return () => clearInterval(id);
   }, [fetchTransfers]);
 

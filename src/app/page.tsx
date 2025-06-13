@@ -102,7 +102,7 @@ export default function Home() {
       }
     };
     loadRewards();
-    const id = setInterval(loadRewards, 5000);
+    const id = setInterval(loadRewards, 180000);
     return () => {
       mounted = false;
       clearInterval(id);
