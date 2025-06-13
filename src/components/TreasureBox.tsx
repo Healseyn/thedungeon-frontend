@@ -14,9 +14,9 @@ const TreasureBox: FC<TreasureBoxProps> = ({ xp, tokens }) => {
       <div className="flex justify-center">
         <PackageOpen className="w-8 h-8 text-yellow-400" />
       </div>
-      <div className="text-sm text-gray-300">Possible Loot</div>
+      <div className="text-sm text-gray-300">Monster Loot</div>
       <div className="text-sm text-dungeon-gold font-bold">{xp.toLocaleString()} XP</div>
-      <div className="text-sm text-yellow-400 font-bold">{tokens.toLocaleString()} Tokens</div>
+      <div className="text-sm text-yellow-400 font-bold">{tokens.toLocaleString(undefined, { maximumFractionDigits: 2 })} Tokens</div>
     </div>
   );
 };

@@ -35,6 +35,7 @@ export default function Home() {
     bossDamage,
     xpGain,
     spellCast,
+    currentMonsterId,
     attack,
     connectWallet
   } = useSocket();
@@ -48,6 +49,8 @@ export default function Home() {
   } = useSolanaWallet();
 
   const [showSpells, setShowSpells] = useState(false);
+  const [lootXp, setLootXp] = useState(0);
+  const [lootTokens, setLootTokens] = useState(0);
 
   // Initial mount log
   useEffect(() => {
@@ -73,6 +76,30 @@ export default function Home() {
   useEffect(() => {
     devLog('Game state or registration status changed', { isRegistered, gameState });
   }, [isRegistered, gameState]);
+
+  // Fetch rewards for the current monster
+  useEffect(() => {
+    const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001';
+    let mounted = true;
+    const loadRewards = async () => {
+      try {
+        const res = await fetch(`${SOCKET_URL}/api/game/rewards`);
+        if (mounted && res.ok) {
+          const data = await res.json();
+          setLootXp(Math.round(data.xpPool));
+          setLootTokens(Math.round(data.tokenPool));
+        }
+      } catch (err) {
+        console.error('Failed to fetch rewards', err);
+      }
+    };
+    loadRewards();
+    const id = setInterval(loadRewards, 5000);
+    return () => {
+      mounted = false;
+      clearInterval(id);
+    };
+  }, [currentMonsterId]);
 
   // Loading screen
   if (!isConnected && !connectionError) {
@@ -238,8 +265,6 @@ export default function Home() {
     isOnline: p.isOnline,
   }));
 
-  const lootXp = gameState.monster.level * 100;
-  const lootTokens = gameState.monster.level * 100;
 
   // Main game screen
   return (
