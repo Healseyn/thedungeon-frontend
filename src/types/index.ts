@@ -1,17 +1,20 @@
 export interface Player {
-  id: string;
+  walletAddress: string;
   name: string;
-  damage: number;
+  level: number;
+  tokenBalance: number;
+  experience: number;
   totalDamage: number;
-  coins: number;
+  attackCount: number;
   isOnline: boolean;
-  attackCount?: number;
+  damage: number;
   joinedAt?: number;
   lastSeen?: number;
 }
 
 export interface Monster {
   id: string;
+  spawnId: string;
   name: string;
   /** Path to the monster image under `/public` */
   image: string;
@@ -19,6 +22,7 @@ export interface Monster {
   currentHealth: number;
   level: number;
   createdAt?: number;
+  healthPercentage?: number;
 }
 
 export interface DamageEvent {

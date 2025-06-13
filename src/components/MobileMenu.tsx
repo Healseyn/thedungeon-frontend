@@ -16,7 +16,7 @@ interface PlayerData {
   level: number;
   experience: number;
   totalDamage: number;
-  coins: number;
+  tokenBalance: number;
   damage: number;
   attackCount: number;
   isOnline: boolean;
