@@ -104,7 +104,7 @@ const PendingRewardsBubble: FC = () => {
     <>
       <button
         onClick={() => setShowModal(true)}
-        className="fixed bottom-24 right-4 z-50 bg-dungeon-surface/90 backdrop-blur-sm border border-dungeon-border rounded-full w-10 h-10 flex items-center justify-center text-dungeon-gold shadow-lg md:bottom-28"
+        className="fixed bottom-24 left-4 z-50 bg-dungeon-surface/90 backdrop-blur-sm border border-dungeon-border rounded-full w-10 h-10 flex items-center justify-center text-dungeon-gold shadow-lg md:bottom-28"
       >
         <div className="relative">
           <Gift className="w-5 h-5" />
