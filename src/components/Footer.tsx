@@ -53,7 +53,7 @@ const Footer: FC<FooterProps> = ({
 
         {/* Pump.fun */}
         <a
-          href="https://pump.fun"
+          href="https://pump.fun/coin/ChyaLf1QEDymfLaWMEvm4Uv6km3LfEY2Lrm1QzMspump"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Pump.fun"
