@@ -80,3 +80,11 @@
 .wallet-adapter-modal-button-close:hover {
   color: #ffd600 !important;
 }
+
+@media (max-width: 480px) {
+  .wallet-btn,
+  .wallet-adapter-button {
+    padding: 0.35rem 0.9rem !important;
+    font-size: 0.85rem !important;
+  }
+}
