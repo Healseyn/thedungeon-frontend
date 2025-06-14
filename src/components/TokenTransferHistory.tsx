@@ -2,6 +2,7 @@
 
 import { FC, useCallback, useEffect, useState } from "react";
 import { Coins } from "lucide-react";
+import TokenTransferModal from "./TokenTransferModal";
 
 const SOCKET_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
@@ -20,6 +21,7 @@ interface TokenTransferHistoryProps {
 
 const TokenTransferHistory: FC<TokenTransferHistoryProps> = ({ limit = 5 }) => {
   const [transfers, setTransfers] = useState<TokenTransfer[]>([]);
+  const [selected, setSelected] = useState<TokenTransfer | null>(null);
 
   const fetchTransfers = useCallback(async () => {
     try {
@@ -28,7 +30,7 @@ const TokenTransferHistory: FC<TokenTransferHistoryProps> = ({ limit = 5 }) => {
       );
       if (res.ok) {
         const data = await res.json();
-        setTransfers(data);
+        setTransfers(data.slice(0, limit));
       }
     } catch (err) {
       console.error("Failed to fetch token transfers", err);
@@ -56,15 +58,22 @@ const TokenTransferHistory: FC<TokenTransferHistoryProps> = ({ limit = 5 }) => {
         </div>
       ) : (
         <div className="space-y-1 max-h-60 overflow-y-auto custom-scrollbar text-sm">
-          {transfers.map((t) => (
-            <div key={t.id} className="flex justify-between w-full px-1">
+          {transfers.map(t => (
+            <button
+              key={t.id}
+              onClick={() => setSelected(t)}
+              className="flex justify-between w-full hover:bg-dungeon-accent/40 rounded px-1"
+            >
               <span className="text-gray-200 truncate">+{t.amount}</span>
               <span className="text-gray-400 font-mono" title={t.wallet}>
                 {formatAddr(t.wallet)}
               </span>
-            </div>
+            </button>
           ))}
         </div>
+      )}
+      {selected && (
+        <TokenTransferModal transfer={selected} onClose={() => setSelected(null)} />
       )}
     </div>
   );
