@@ -150,7 +150,7 @@ const PlayerStats: FC<PlayerStatsProps> = ({ player }) => {
         {/* Level Bonus */}
         <div className="border-t border-dungeon-border pt-2 mt-2">
           <div className="text-xs text-gray-400 text-center">
-            Level {player.level} Bonus: +{(player.level - 1) * 10}% damage
+            Level {player.level} Bonus: +{(player.level - 1) * 1}% damage
           </div>
         </div>
       </div>
