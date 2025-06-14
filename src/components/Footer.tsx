@@ -49,7 +49,7 @@ const Footer: FC<FooterProps> = ({
       {/* Controls & Links */}
       <div className="flex items-center justify-end space-x-4 flex-1">
         <VolumeControl />
-        <div className="text-sm text-gray-400">v0.1.0-BETA</div>
+        <div className="text-sm text-gray-400">v0.1.1-BETA</div>
 
         {/* Pump.fun */}
         <a
